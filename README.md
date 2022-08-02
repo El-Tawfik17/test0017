@@ -1,3 +1,3 @@
-# 0x0B. C - More malloc, free
+# 0x0D. C - Structures, typedef
 
- 
+# 
