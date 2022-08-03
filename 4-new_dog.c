@@ -1,53 +1,93 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "dog.h"
-int get_len(int i);
-char *str_cpy(char *dest, char *src);
+
+char *_strdup(char *str);
+
 /**
  * new_dog - a function that creates a new dog
- * get len of name + owner, malloc them, cpy name + owner to new
- * @name: name
- * @age: age
- * @owner: owner
- * Return: 0
+ * @name: the of name of the  dog
+ * @age: the age of the dog
+ * @owner: the owner of the dog
+ *
+ * Return: a pointer to the new dog or NULL if failed
  */
+
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *new_name;
-	char *copy_name, *copy_owner;
-	unsigned int x, name_len = 0, owner_len = 0;
+	dog_t *p = NULL;
 
-	new_name = malloc(sizeof(dog_t));
-	if (name == NULL)
-		return (NULL);
-	if (name == NULL || age <= 0 || owner == NULL)
+	if (name == NULL || owner == NULL)
 	{
-		free(new_name);
 		return (NULL);
 	}
 
-	for (x = 0; name[x] != '\0'; x++)
-		name_len++;
+	p = malloc(sizeof(dog_t));
 
-	for (x = 0; owner[x] != '\0'; x++)
-		owner_len++;
-
-	copy_name = malloc(sizeof(char) * (name_len + 1));
-	if (copy_name == NULL)
+	if (p == NULL)
+	{
 		return (NULL);
+	}
 
-	copy_owner = malloc(sizeof(char) * (owner_len + 1));
-	if (copy_owner == NULL)
+	p->name = _strdup(name);
+
+	if (p->name == NULL)
+	{
+		free(p);
 		return (NULL);
+	}
 
-	for (x = 0; x <= name_len; x++)
-		copy_name[x] = name[x];
+	p->age = age;
+	p->owner = _strdup(owner);
 
-	for (x = 0; x <= owner_len; x++)
-		copy_owner[x] = owner[x];
+	if (p->owner == NULL)
+	{
+		free(p->name);
+		free(p);
+		return (NULL);
+	}
+	return (p);
+}
 
-	new_name->name = copy_name;
-	new_name->owner = copy_owner;
-	new_name->age = age;
-	return (new_name);
+
+/**
+ * _strdup - a function that returns a pointer to a newly
+ * allocated space in memory, that is a duplicate of the string
+ * str
+ * @str: the string
+ *
+ * Return: The pointer to the duplicated string
+ */
+
+char *_strdup(char *str)
+{
+	char *ptr;
+	int len;
+
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+
+	len = 0;
+	while (str[len] != '\0')
+	{
+		len++;
+	}
+
+	ptr = malloc(sizeof(char) * len + 1);
+
+	if (ptr == NULL)
+	{
+		return (NULL);
+	}
+
+	len = 0;
+	while (str[len] != '\0')
+	{
+		ptr[len] = str[len];
+		len++;
+	}
+	ptr[len] = '\0';
+	return (ptr);
 }
