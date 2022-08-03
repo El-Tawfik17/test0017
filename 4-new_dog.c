@@ -1,93 +1,83 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "dog.h"
 
-char *_strdup(char *str);
-
 /**
- * new_dog - a function that creates a new dog
- * @name: the of name of the  dog
- * @age: the age of the dog
- * @owner: the owner of the dog
- *
- * Return: a pointer to the new dog or NULL if failed
+ * _copy  -   Make a copy of passed in argument
+ * @src:      Data to make copy of
+ * Return:    Pointer
  */
 
-dog_t *new_dog(char *name, float age, char *owner)
-{
-	dog_t *p = NULL;
-
-	if (name == NULL || owner == NULL)
-	{
-		return (NULL);
-	}
-
-	p = malloc(sizeof(dog_t));
-
-	if (p == NULL)
-	{
-		return (NULL);
-	}
-
-	p->name = _strdup(name);
-
-	if (p->name == NULL)
-	{
-		free(p);
-		return (NULL);
-	}
-
-	p->age = age;
-	p->owner = _strdup(owner);
-
-	if (p->owner == NULL)
-	{
-		free(p->name);
-		free(p);
-		return (NULL);
-	}
-	return (p);
-}
-
-
-/**
- * _strdup - a function that returns a pointer to a newly
- * allocated space in memory, that is a duplicate of the string
- * str
- * @str: the string
- *
- * Return: The pointer to the duplicated string
- */
-
-char *_strdup(char *str)
+char *_copy(char *src)
 {
 	char *ptr;
-	int len;
+	int i, len;
 
-	if (str == NULL)
+	if (src == NULL)
 	{
 		return (NULL);
 	}
 
-	len = 0;
-	while (str[len] != '\0')
-	{
-		len++;
-	}
+	for (len = 0; src[len] != '\0'; len++)
+		;
 
-	ptr = malloc(sizeof(char) * len + 1);
+	ptr = malloc(sizeof(char) * (len + 1));
 
 	if (ptr == NULL)
 	{
 		return (NULL);
 	}
 
-	len = 0;
-	while (str[len] != '\0')
+	for (i = 0; src[i] != '\0'; i++)
 	{
-		ptr[len] = str[len];
-		len++;
+		ptr[i] = src[i];
 	}
-	ptr[len] = '\0';
+
+	ptr[i] = '\0';
 	return (ptr);
+}
+
+/**
+ * new_dog     - Create a new dog variable
+ * @name:        Name of the dog
+ * @age:         Age of the dog
+ * @owner:       Owner of the dog
+ * Return:       Pointer to new dog variable
+ */
+
+dog_t *new_dog(char *name, float age, char *owner)
+{
+	dog_t *snoopie;
+	char *new_name, *new_owner;
+
+	if (name == NULL || owner == NULL)
+	{
+		return (NULL);
+	}
+
+	snoopie = malloc(sizeof(dog_t));
+	if (snoopie == NULL)
+	{
+		return (NULL);
+	}
+
+	new_name = _copy(name);
+	if (new_name == NULL)
+	{
+		free(snoopie);
+		return (NULL);
+	}
+	(*snoopie).name = new_name;
+
+	(*snoopie).age = age;
+
+	new_owner = _copy(owner);
+	if (new_owner == NULL)
+	{
+		free((*snoopie).name);
+		free(snoopie);
+		return (NULL);
+	}
+	(*snoopie).owner = new_owner;
+
+	return (snoopie);
 }

@@ -1,19 +1,18 @@
-#include <stdio.h>
-#include "dog.h"
 #include <stdlib.h>
+#include "dog.h"
+
 /**
- * free_dog - Frees dogs
- *@d: Dog object
- * Return: Always 0.
+ * free_dog - free memory
+ *@d: array
+ * Description: Free memory for struct
  */
 
 void free_dog(dog_t *d)
 {
-	if (d == NULL)
-		return;
-	if (d->name != NULL)
+	if (d)
+	{
 		free(d->name);
-	if (d->owner != NULL)
 		free(d->owner);
-	free(d);
+		free(d);
+	}
 }
