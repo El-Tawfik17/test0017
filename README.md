@@ -1,92 +1,68 @@
-# ALX Software Enginering Printf Team Project
-This team project is a custom made printf function for the C programming language called \_printf. It has been optimized to take various inputs and optional arguments based exactly on how the standard library function printf works. We submitted this as part of the ALX software engineering course requirement for grading.
+# 0x12. C - More singly linked lists
 
-## **Synopsis**
-This function **\_printf()** writes output to stdout, the standard output stream with the format and options without making use of any of the standard library files. It was written to use a local buffer of 1024 bytes when printing although it can print larger sets of data.
+## Description
+What you should learn from this project:
 
-The \_printf() function returns the total number of characters printed to the stdout(excluding the null byte at the end of strings) after a successful execution.
+How to use linked lists
+Start to look for the right source of information without too much help
 
-If an output error is encountered, a negative value of -1 is returned.
+---
 
-The prototype of this function is:  **int _printf(const char *format, ...);***
+### [0. Print list](./0-print_listint.c)
+* Write a function that prints all the elements of a listint_t list.
 
-This means that it has one mandatory format argument, and an extra number of arguments that can be none, or many.
 
-**Format of the format string**
+### [1. List length](./1-listint_len.c)
+* Write a function that returns the number of elements in a linked listint_t list.
 
-The format string is a character string starting and ending with double quotes. The format string is composed of zero or more directives; ordinary characters (not %), and conversion specifications, each of which results in fetching zero or more subsequent arguments. 
 
-Each conversion specification is introduced by the character **%** and ends with a **conversion specifier**. In between there may be (in this order):
+### [2. Add node](./2-add_nodeint.c)
+* Write a function that adds a new node at the beginning of a listint_t list.
 
-> Zero or more **flags**
->
-> An optional field **width**
->
-> An optional **precision** modifier
->
-> An optional **length** modifier
 
-**The flag characters**
+### [3. Add node at the end](./3-add_nodeint_end.c)
+* Write a function that adds a new node at the end of a listint_t list.
 
-|**Flag**| Description  |
-|--|--|
-|**#**| For **o** conversions the first character of the output string is made zero (by prefixing a 0 if it was not zero already).  For **x** and **X** conversions, a nonzero result has the string "**0x**" or "**0X**" respectively added. |
-|**0**| (Not implemented yet) The  value should be zero padded. For **d**, **i**, **o**, **u**, **x**, and **X** the converted value is padded on the left with zeros. If the 0 and **-** flags both appear,the **0** flag is ignored. If a precision is given with a numeric conversion, the **0** flag is ignored.|
-|**-**|(Minus sign, not implemented yet) The converted value is to be left adjusted on the field boundary, (Default is right justification) and  padded  with  blanks  in  the right rather than on the left with blanks or zeros. This flag overrides **0** if both are given.|
-|' '| (Blank Space) The argument is padded with a single blank space before a positive number or empty string produced by a signed conversion.|
-|**+**| A sign (+ or -) should always be placed before a number produced with a signed conversion.  By default, only negative numbers have this sign.|
 
-**The field width**
+### [4. Free list](./4-free_listint.c)
+* Write a function that frees a listint_t list.
 
-An  optional decimal digit string (with nonzero first digit) specifying a minimum field width.  If  the  converted  value  has  fewer characters  than  the field width, it will be padded with spaces on the left if the flag - is not present, and on the right  if  it  is present.  A character * can be used instead of a decimal string. In this case, an argument passed to the function will be taken as  the width value.
 
-    printf("%5d", num);
+### [5. Free](./5-free_listint2.c)
+* Write a function that frees a listint_t list.
 
-or
 
-	printf("%*d", width, num);
+### [6. Pop](./6-pop_listint.c)
+* Write a function that deletes the head node of a listint_t linked list, and returns the head node’s data (n).
 
-**The precision**
 
- An  optional  precision,  in  the  form  of a period ('.')  followed by an optional decimal digit string.  A negative precision is taken  as  if  the precision were omitted.  This gives the minimum number of digits to appear for d, i, o, u, x, and X conversions,  or the  maximum  number of characters to be printed from a string for s and S conversions. A character * can be used instead of a  decimal string. In this case, an argument passed to the function will be taken as the precision value.
+### [7. Get node at index](./7-get_nodeint.c)
+* Write a function that returns the nth node of a listint_t linked list.
 
-    printf("%.3d", num);
 
-  or
+### [8. Sum list](./8-sum_listint.c)
+* Write a function that returns the sum of all the data (n) of a listint_t linked list.
 
-    printf("%.*d", precision, num);
 
-**The length modifiers**
+### [9. Insert](./9-insert_nodeint.c)
+* Write a function that inserts a new node at a given position.
 
-|Modifier| Description |
-|--|--|
-|**l**| An integer conversion to a **long int** or **unsigned long int** argument.  |
-|**h**| An integer conversion to a **short int** or **unsigned short int** argument. |
 
-**The conversion specifier**
+### [10. Delete at index](./10-delete_nodeint.c)
+* Write a function that deletes the node at index index of a listint_t linked list.
 
-|Specifier| Description |
-|--|--|
-|**d, i**|The argument **int** is converted to a signed decimal notation. If precision is present,it gives the minimum number of digits that must appear; if the converted value requires fewer digits, then it is padded with zeros on the left. Default precision is 1.|
-|**o, u, x, X**|The argument is converted to unsigned octal (**o**), unsigned decimal (**u**), or unsigned hexamedical (**x** and **X**) notation. The letters abcdef are used for x conversion and the letters ABCDEF are used for X conversion. If precision is present, it will give  the  minimum  number  of  digits  that  must appear; if the converted value requires fewer digits, then it will be padded with zeros. By default the precision is 1.  |
-|**c**|The  int argument is converted to an unsigned char and the resulting character is written. The representation of characters is based off the ASCII coding.|
-|**s**|The argument received is expected to be a pointer type char * to an array of characters.  Characters from this array are printed up  to  (but  not including) a null byte  (**'\0'**).  If precision is specified, then this will determine how many characters are taken into account for printing.|
-|**p**|A void * pointer argument is printed as hexadecimal in lower caps representing an adress in memory.|
-|**%**|A  ' **%** ' character is written and no conversion is made. The specification is as follows: **%%**. |
-|**b**|The argument is converted to an unsigned int value and then operated to get its binary representation (base 2).|
-|**S**| The  argument  received  is expected to be a pointer type char * to an array of characters.  Characters from this array are printed up to (but not including) a null byte  ('\0').  Non printable characters (0 < ASCII value < 32 or >= 127) are printed this way: \x, followed by  the  ASCII  code value in hexadecimal (upper case - always 2 characters). |
-|**r**|The  argument received is expected to be a pointer type char * to an array of characters.  Characters from this array are printed in reverse order up to (but not including) a null byte  ('\0').  |
-|**R**|The argument received is expected to be a pointer type char * to an array of characters.  Characters from this array  are  encoded  to  ROT13  and printed in order up to (but not including a null byte  ('\0').  |
 
-# Getting Started
+### [11. Reverse list](./100-reverse_listint.c)
+* Write a function that reverses a listint_t linked list.
 
-These instructions will get you a copy of the project up and running on your local machine (Linux distro) for development and testing purposes.
 
-## **Installing**
+### [12. Print (safe version)](./101-print_listint_safe.c)
+* Write a function that prints a listint_t linked list.
 
-You will need to clone the repository of the project from Github. This will contain the _printf function and all of its dependencies. No main.c file will be provided for testing, so you will need to create one.
 
-    git clone https://github.com/ehoneahobed/printf.git
+### [13. Free (safe version)](./102-free_listint_safe.c)
+* Write a function that frees a listint_t list.
 
-After cloning the repository you will have a folder called printf. In here there will be several files that allow the function to work.
- 
+
+### [14. Find the loop](./103-find_loop.c)
+* Write a function that finds the loop in a linked .
